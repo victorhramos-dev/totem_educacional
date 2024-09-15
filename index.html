@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Totem Educacional</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Vue.js 3 CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app" class="container-box romero-britto-style">
+        <div v-if="currentStep === 1">
+            <h1 class="text-center mb-4">Escolha um tema</h1>
+            <form @submit.prevent="goToStep(2)">
+                <div class="form-check" v-for="(option, index) in profiles" :key="index">
+                    <input class="form-check-input" type="radio" name="profile" :id="'profile' + index" :value="option"
+                        v-model="selectedProfile" required>
+                    <label class="form-check-label" :for="'profile' + index">
+                        {{ option }}
+                    </label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary mt-4">Avançar</button>
+            </form>
+        </div>
+
+        <div v-if="currentStep === 2">
+            <h1 class="text-center mb-4">Escolha o Nível de Dificuldade</h1>
+            <form @submit.prevent="goToStep(3)">
+                <div class="form-check" v-for="(option, index) in difficulties" :key="index">
+                    <input class="form-check-input" type="radio" name="difficulty" :id="'difficulty' + index"
+                        :value="option" v-model="selectedDifficulty" required>
+                    <label class="form-check-label" :for="'difficulty' + index">
+                        {{ option.label }} ({{ option.time }} minutos)
+                    </label>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary mt-4">Avançar</button>
+            </form>
+        </div>
+
+        <div v-if="currentStep === 3">
+            <h1 class="text-center mb-4">Responda à Pergunta</h1>
+            <div id="question">{{ questionText }}</div>
+            <form @submit.prevent="submitAnswer">
+                <input type="text" class="form-control my-3" placeholder="Digite sua resposta" v-model="answer"
+                    required>
+                <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+            </form>
+            <div id="result" v-if="resultMessage" v-html="resultMessage"></div>
+        </div>
+
+        <!-- Admin Section Modal -->
+        <div class="modal fade" id="adminModal" tabindex="-1" aria-labelledby="adminModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="adminModalLabel">Gerenciar Questões</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="addQuestion">
+                            <div class="mb-3">
+                                <label for="profile" class="form-label">Perfil</label>
+                                <select id="profile" v-model="newQuestion.profile" class="form-select" required>
+                                    <option value="">Selecione um perfil</option>
+                                    <option v-for="(profile, index) in profiles" :key="index" :value="profile">
+                                        {{ profile }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="difficulty" class="form-label">Dificuldade</label>
+                                <select id="difficulty" v-model="newQuestion.difficulty" class="form-select" required>
+                                    <option value="">Selecione uma dificuldade</option>
+                                    <option v-for="(difficulty, index) in difficulties" :key="index"
+                                        :value="difficulty">
+                                        {{ difficulty.label }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="question" class="form-label">Pergunta</label>
+                                <input type="text" id="question" v-model="newQuestion.question" class="form-control"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="answer" class="form-label">Resposta</label>
+                                <input type="text" id="answer" v-model="newQuestion.answer" class="form-control"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Adicionar Pergunta</button>
+                        </form>
+                        <hr>
+                        <h3>Perguntas Cadastradas</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item" v-for="(q, index) in questions" :key="index">
+                                {{ q.profile }} ({{ q.difficulty }}): {{ q.question }} - Resposta: {{ q.answer }}
+                                <button class="btn btn-danger btn-sm float-end"
+                                    @click="removeQuestion(index)">Remover</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

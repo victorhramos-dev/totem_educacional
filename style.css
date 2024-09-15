@@ -1,0 +1,79 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f4f4f4 25%, #e9ecef 25%, #e9ecef 50%, #f4f4f4 50%, #f4f4f4 75%, #e9ecef 75%, #e9ecef);
+    background-size: 56.57px 56.57px;
+    animation: backgroundMove 5s linear infinite;
+}
+
+@keyframes backgroundMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 56.57px 56.57px;
+    }
+}
+
+.container-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    width: 100%;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #e9ecef;
+}
+
+.romero-britto-style {
+    background-color: #ffcc00;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    color: #000;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.romero-britto-style h1 {
+    color: #ff0066;
+    text-shadow: 2px 2px #000;
+}
+
+.romero-britto-style .form-check-label {
+    color: #0066ff;
+}
+
+.romero-britto-style .btn-primary {
+    background-color: #ff0066;
+    border-color: #ff0066;
+    color: #fff;
+}
+
+.romero-britto-style .btn-primary:hover {
+    background-color: #cc0052;
+    border-color: #cc0052;
+}
