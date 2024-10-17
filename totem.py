@@ -9,6 +9,7 @@ PORT = 9090
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header("Content-type", "application/json")
         super().end_headers()
 
 def start_server():
